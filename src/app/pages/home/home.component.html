@@ -1,0 +1,66 @@
+<div class="container">
+    <div class="d-abs">
+        <div class="how-to-container" hidden>
+            <span class="how-to">
+                <i class="fa fa-info"></i> How to install
+            </span>
+        </div>
+        <div>
+            <h1>Downloadr.ninja</h1>
+            <h2>Instagram Converter to MP4 and Instragram Downloader</h2>
+            <h3>Download videos and photos from Instagram and IGTV online</h3>
+            <div class="input-container">
+                <input [(ngModel)]="link" type="text" placeholder="Copy and paste the Instagram link here" autofocus>
+                <button type="submit" class="instagram" (click)="onDownload()">
+                    <div *ngIf="!loading; else loadingTmp">
+                        <span class="fa fa-search"></span>
+                        Search
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!loading;">
+        <div class="media-container" *ngIf="data">
+            <h6 class="formats-title">Download {{getType()}}:</h6>
+            <div class="formats-container">
+                <div *ngIf="!data.shortcode_media.is_video; else videoTmp">
+                    <button *ngFor="let resource of data.shortcode_media.display_resources"
+                        (click)="download(resource.src)" class="format-btn">
+                        <i class="fa fa-download"></i> Image
+                        <span class="image-size">{{resource.config_width}} x
+                            {{resource.config_height}}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="error" [ngClass]="{'error-visible': error}">
+            <p>{{error}}</p>
+        </div>
+    </div>
+</div>
+
+<ng-template #loadingTmp>
+    <div class="spinner-container">
+        <div>
+            <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</ng-template>
+<ng-template #videoTmp>
+    <div>
+        <button (click)="download(data.shortcode_media.video_url)"
+            class="format-btn"> <i class="fa fa-download"></i> MP4 Video
+        </button>
+    </div>
+    <div>
+        <button  (click)="download(data.shortcode_media.thumbnail_src)"
+            class="format-btn"> <i class="fa fa-download"></i> Thumbnail
+        </button>
+    </div>
+</ng-template>

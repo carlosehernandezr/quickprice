@@ -17,7 +17,7 @@
     "prerender": "ng run igdownload:prerender",
     "build:functions": "npm run --prefix functions build",
     "build:all": "npm run build:ssr && npm run build:functions",
-    "start:heroku": "node dist/igdownload/server/main.js",
+    "start:heroku": "node dist/igdownload/server",
     "postinstall": "npm run build:ssr"
   },
   "private": true,
